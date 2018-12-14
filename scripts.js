@@ -37,10 +37,9 @@ app.controller('LoginController', function($scope, $http, $location) {
         },
       }).then(function(response) {
         $scope.projects = response.data;
-      }).then(() => {
-        console.log("$scope at last: ", $scope);
+      }).then(function() {
         $location.path('/home');
-      })
+      });
     });
   };
 });
