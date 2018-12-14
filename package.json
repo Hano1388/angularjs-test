@@ -7,7 +7,7 @@
     "dev": "lite-server"
   },
   "author": "",
-  "license": "ISC",
+  "license": "",
   "dependencies": {
     "lite-server": "^2.4.0"
   }

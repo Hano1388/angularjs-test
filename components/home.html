@@ -1,47 +1,37 @@
-<!-- <h2>Projects and user info must be showed up here when user is logged in</h2> -->
-<h1>Welcome username!</h1>
-<div class="user-details-container">
-  <div class="row">
-    <div class="col-md-6 img">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"  alt="" class="img-rounded">
-      <img src={{user.avatar}} />
-    </div>
-    <div class="col-md-6 details">
-      <blockquote>
-        <h5>User Template</h5>
-        <h5>{{userInfo.user.name}} //</h5>
-        <small><cite title="Source Title">Vancouver, BC Canada  <i class="fa fa-map-marker"></i></cite></small>
-      </blockquote>
-      <p>
-        user details...
-      </p>
+<div ng-controller="LoginController">
+  <h1>Welcome {{userInfo.user.name}}!</h1>
+  <div class="user-details-container">
+    <div class="row">
+      <div class="col-md-6">
+        <img ng-src="{{userInfo.user.avatar}}"  alt="" class="rounded-circle img-fluid" style="padding: 0px; width: 200px; height: 200px;">
+      </div>
+      <div class="col-md-6 details">
+        <blockquote>
+          <h5>{{userInfo.user.name}}</h5>
+          <small><cite title="Source Title">Vancouver, BC Canada  <i class="fa fa-map-marker"></i></cite></small>
+        </blockquote>
+        <p>
+          user details...
+        </p>
+      </div>
     </div>
   </div>
-</div>
-
-
-<div class="container">
-	<div class="row">
-		<!-- <h2 class="text-danger">Approve User</h2> -->
-
-
-		<table class="table table-bordered success">
-				<thead>
-					<tr class='text-primary'>
-						<th>#</th>
-						<th>Project</th>
-					</tr>
-				</thead>
-        <tbody>
-          <tr ng-repeat="project in projects">
-            <th>//{{project.number}}</th>
-						<th>//{{project.name}}</th>
-          </tr>
-          <tr>
-            <th>2</th>
-            <th>second project</th>
-          </tr>
-        </tbody>
-			</table>
-	</div>
+  <div class="container">
+  	<div class="row">
+  		<table class="table table-bordered success">
+  				<thead>
+  					<tr class='text-primary'>
+  						<th>#</th>
+  						<th>Project</th>
+  					</tr>
+  				</thead>
+          <tbody>
+            <tr ng-repeat="project in projects">
+              <th>{{project.number}}</th>
+  						<th>{{project.name}}</th>
+            </tr>
+          </tbody>
+  			</table>
+  	</div>
+  </div>
 </div>

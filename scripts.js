@@ -1,6 +1,8 @@
 /*jshint esversion: 6 */
 var app = angular.module('main', ['ngRoute']);
 
+// TODO: writing a service for user authentication
+
 app.config(function($routeProvider) {
   $routeProvider.when('/', {
     templateUrl: './components/welcome.html',
@@ -13,33 +15,40 @@ app.config(function($routeProvider) {
   });
 });
 
-app.controller('LoginController', function($scope, $http, $location) {
-  $scope.login = function() {
-    var { username, password } = $scope;
-    $http({
-      url: 'https://dev.sitemax.build/api/sign-in?schema=name,avatar',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Client-Type': 'browser'
-      },
-      data: { username, password }
-    }).then(function(response) {
-      $scope.userInfo = response.data;
-      console.log(response.data);
-    }).then(function() {
+app.factory('DataProvider', function($rootScope, $http) {
+  return{
+    login: function(user) {
       $http({
-        method: 'GET',
-        url: 'https://dev.sitemax.build/api/projects?schema=name,number',
+        url: 'https://dev.sitemax.build/api/sign-in?schema=name,avatar',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Authtoken': $scope.userInfo.authtoken
+          'X-Client-Type': 'browser'
         },
+        data: { username: user.username, password: user.password }
       }).then(function(response) {
-        $scope.projects = response.data;
+        $rootScope.userInfo = response.data;
       }).then(function() {
-        $location.path('/home');
+        $http({
+          method: 'GET',
+          url: 'https://dev.sitemax.build/api/projects?schema=name,number',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Authtoken': $rootScope.userInfo.authtoken
+          },
+        }).then(function(response) {
+          $rootScope.projects = response.data;
+        });
       });
-    });
+    }
+  };
+});
+
+app.controller('LoginController', function($scope, $location, DataProvider) {
+  // var { username, password } = $scope;
+  $scope.login = function() {
+    DataProvider.login($scope);
+    // add user authentication here
+    $location.path('/home');
   };
 });
